@@ -28,7 +28,7 @@ group_by_double = cs['балл'].groupby([cs['округ'], cs['предмет']
 
 
 """диаграмма по округам"""
-"""group_by_okrug = pd.DataFrame(group_by_okrug)
+group_by_okrug = pd.DataFrame(group_by_okrug)
 y = list(group_by_okrug.values)
 for i in range(len(y)):
     y[i] = y[i][0]
@@ -36,11 +36,12 @@ x = group_by_okrug.index.values
 x, y = np.array(x), np.array(y)
 fig, ax = plt.subplots()
 ax.bar(x, y)
-plt.show()"""
+plt.show()
+fig.savefig('group_by_okrug')
 
 
 """диаграмма по предметам"""
-"""group_by_task = pd.DataFrame(group_by_task)
+group_by_task = pd.DataFrame(group_by_task)
 y = list(group_by_task.values)
 for i in range(len(y)):
     y[i] = y[i][0]
@@ -52,5 +53,6 @@ fig, ax = plt.subplots()
 fig.set_figwidth(12)
 fig.set_figheight(8)
 ax.bar(x, y)
-plt.show()"""
+plt.show()
+fig.savefig('group_by_task')
 
