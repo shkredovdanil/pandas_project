@@ -115,7 +115,8 @@ def kor_olymp_with_total_ege():
     print(data['Количество олимпиад'].corr(data['Сумма баллов']))
 
 
-#olymp_in_region()
+
+olymp_in_region()
 #regions_for_ege()
 #kor_matholymp_with_ege()
 #kor_olymp_with_total_ege()
