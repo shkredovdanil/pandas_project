@@ -22,6 +22,21 @@ cs['Количество олимпиад математика'] = pd.to_numeric
 cs['Количество олимпиадинформатика'] = pd.to_numeric(cs['Количество олимпиадинформатика'])
 cs['Количество олимпиад'] = pd.to_numeric(cs['Количество олимпиад'])
 cs['Сумма баллов'] = pd.to_numeric(cs['Сумма баллов'])
+attestat = cs['Укажите средний балл аттестата о среднем полном общем образовании (за 11 класс).']
+new = []
+for i in attestat:
+    new.append(float(str(i).replace(',', '.')))
+cs['Укажите средний балл аттестата о среднем полном общем образовании (за 11 класс).'] = new
+new = []
+attestat = cs['Оценка по математике:']
+for i in attestat:
+    new.append(float(str(i).replace(',', '.')))
+cs['Оценка по математике:'] = new
+new = []
+attestat = cs['Оценка по информатике:']
+for i in attestat:
+    new.append(float(str(i).replace(',', '.')))
+cs['Оценка по информатике:'] = new
 
 cs = pd.DataFrame(cs)
 regions = []
@@ -102,11 +117,13 @@ def kor_matholymp_with_ege():
     data = data[data['Количество олимпиад математика'] != 0]
     print(data['Количество олимпиад математика'].corr(data['Математика']))
 
+
 def kor_ictolymp_with_ege():
     data = cs[['Информатика', 'Количество олимпиадинформатика']]
     data = data.sort_values(by='Количество олимпиадинформатика', ascending=False)
     data = data[data['Количество олимпиадинформатика'] != 0]
     print(data['Количество олимпиадинформатика'].corr(data['Информатика']))
+
 
 def kor_olymp_with_total_ege():
     data = cs[['Сумма баллов', 'Количество олимпиад']]
@@ -115,9 +132,43 @@ def kor_olymp_with_total_ege():
     print(data['Количество олимпиад'].corr(data['Сумма баллов']))
 
 
+def attesta_ege():
+    data = cs[['Сумма баллов', 'Укажите средний балл аттестата о среднем полном общем образовании (за 11 класс).']]
+    data = data.sort_values(by='Укажите средний балл аттестата о среднем полном общем образовании (за 11 класс).',
+                            ascending=False)
+    data = data[data['Укажите средний балл аттестата о среднем полном общем образовании (за 11 класс).'] != 0]
+    data = data[1:]
+    print(data)
+    print(data['Укажите средний балл аттестата о среднем полном общем образовании (за 11 класс).'].corr(
+        data['Сумма баллов']))
 
-olymp_in_region()
-#regions_for_ege()
-#kor_matholymp_with_ege()
-#kor_olymp_with_total_ege()
-#kor_ictolymp_with_ege()
+def math_ege():
+    data = cs[['Математика', 'Оценка по математике:']]
+    data = data.sort_values(by='Оценка по математике:',
+                            ascending=False)
+    data = data[data['Оценка по математике:'] != 0]
+    data = data[4:]
+    print(data)
+
+    print(data['Оценка по математике:'].corr(
+        data['Математика']))
+
+def ict_ege():
+    data = cs[['Информатика', 'Оценка по информатике:']]
+    data = data.sort_values(by='Оценка по информатике:',
+                            ascending=False)
+    data = data[data['Оценка по информатике:'] != 0]
+    data = data[3:]
+    print(data)
+
+    print(data['Оценка по информатике:'].corr(
+        data['Информатика']))
+
+# olymp_in_region()
+# regions_for_ege()
+# kor_matholymp_with_ege()
+# kor_olymp_with_total_ege()
+# kor_ictolymp_with_ege()
+#attesta_ege()
+#math_ege()
+#ict_ege()
