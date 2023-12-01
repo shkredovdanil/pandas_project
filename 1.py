@@ -191,7 +191,7 @@ def analyse_fmk_with_ege():
             ans += 1
         if e != 0:
             ans += 1
-        ar1.append(ans/5 * 100)
+        ar1.append(ans / 5 * 100)
     data = cs[['Математика',
                'Оценка по математике:',
                ]].copy()
@@ -200,19 +200,30 @@ def analyse_fmk_with_ege():
     print(data.to_string())
     print(data['Математика'].corr(data['Подготовка']))
 
+
 def cor_olymp_win_with_ege():
     res = []
-    data = cs[['Сумма баллов', 'Количество олимпиад', 'Если принимали, то укажите информацию об этих олимпиадах:']].copy()
+    k = []
+    data = cs[
+        ['Сумма баллов', 'Количество олимпиад', 'Если принимали, то укажите информацию об этих олимпиадах:']].copy()
     for i in data.index:
+        if i == 23 or i == 17 or i == 66 or i == 92:
+            k.append(0)
+            res.append(0)
+            continue
         d = str(data.loc[i, 'Если принимали, то укажите информацию об этих олимпиадах:']).lower()
-        if ('призер' in d or 'победитель' in d) and int(data.loc[i, 'Количество олимпиад'])!=0:
+        if ('призер' in d or 'победитель' in d or 'победительница' in d) and int(data.loc[i, 'Количество олимпиад']) != 0:
             res.append(1)
+            k.append(d.count('призер') + d.count('победитель') + d.count('победительница'))
         else:
+            k.append(0)
             res.append(0)
     data['Призер'] = res
-    data = data[data['Призер']==1]
+    data['Количество призерства'] = k
+    data = data[data['Призер'] == 1]
     print(data.to_string())
-    print(data['Сумма баллов'].corr(data['Количество олимпиад']))
+    print(data['Количество олимпиад'].corr(data['Количество призерства']))
+    print(data['Сумма баллов'].corr(data['Количество призерства'])) # после призерства расчет на 100 автоматомолимпиады
 
 
 # olymp_in_region()
@@ -223,5 +234,5 @@ def cor_olymp_win_with_ege():
 # attesta_ege()
 # math_ege()
 # ict_ege()
-#analyse_fmk_with_ege()
+# analyse_fmk_with_ege()
 cor_olymp_win_with_ege()
